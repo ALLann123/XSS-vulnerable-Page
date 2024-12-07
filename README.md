@@ -8,7 +8,7 @@ The types of XSS include stored XSS, reflected XSS, self XSS, bind XSS and DOM-B
 # Stored XSS
 Happens when a user input is stored inthe server and retrived unsafely. For this vulnerability to work we need to locate a vulnerability inthe web application and then inject malicious script to the server. Once the malicious script is injected to the vulnerable web site it is activated when a user visits the site as the browser unintentionally runs the malicious payload.
 
-#Vuln Page
+# Vuln Page
 The web page above demostrates stored XSS and can be exploited as its vulnerable.
 To set up the web application we first start by locating /var/www/html file which will use apache2 to host the site:
 
