@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stored XSS Example</title>
+</head>
+<body>
+    <h1>Simple Comment Section</h1>
+    <form id="commentForm">
+        <label for="comment">Write a comment:</label><br>
+        <textarea id="comment" rows="4" cols="50" placeholder="Write your comment here..."></textarea><br><br>
+        <button type="button" onclick="saveComment()">Submit</button>
+    </form>
+    <h2>Comments:</h2>
+    <div id="commentsSection"></div>
+
+    <script>
+
+        // Save a new comment and update localStorage
+        function saveComment() {
+            const comment = document.getElementById('comment').value;
+
+            if (comment.trim() !== '') {
+                // Add the new comment to the comments section
+                const commentParagraph = document.createElement('p');
+                commentParagraph.innerHTML = comment; // Vulnerable to XSS
+                document.getElementById('commentsSection').appendChild(commentParagraph);
+
+                // Save updated comments to localStorage
+                localStorage.setItem('comments', document.getElementById('commentsSection').innerHTML);
+
+                // Clear the textarea
+                document.getElementById('comment').value = '';
+            }
+        }
+
+        // Load saved comments from localStorage on page load
+        function loadComments() {
+            const savedComments = localStorage.getItem('comments');
+            if (savedComments) {
+                const commentsSection = document.getElementById('commentsSection');
+                commentsSection.innerHTML = savedComments;
+
+                // Execute any scripts in the stored comments
+                const scripts = commentsSection.querySelectorAll('script');
+                scripts.forEach(script => {
+                    eval(script.innerHTML); // Executes the script content
+                });
+            }
+        }
+
+        // Call loadComments() on page load
+        window.onload = loadComments;
+    </script>
+</body>
+</html>
