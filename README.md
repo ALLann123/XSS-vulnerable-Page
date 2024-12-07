@@ -17,8 +17,8 @@ To set up the web application we first start by locating /var/www/html file whic
 
 Give permissions to the web page"
     
-    kali> sudo chmod 644 /var/www/html/stored_xss.html
-    kali> sudo chown www-data:www-data /var/www/html/stored_xss.html
+    kali> sudo chmod 644 /var/www/html/index.html
+    kali> sudo chown www-data:www-data /var/www/html/index.html
 start apache2 server
 
     kali>sudo systemctl start apache2
